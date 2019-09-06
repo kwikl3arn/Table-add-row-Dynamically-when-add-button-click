@@ -34,41 +34,35 @@ $(document).ready(function () {
     var counter = 0;
 
     $("#addrow").on("click", function () {
-        var newRow = $("<tr>");
+         var newRow = $('<tr id="tr'+counter +'" >');
         var cols = "";
 
         cols += '<td><input type="text" class="form-control" name="name' + counter + '" id="name' + counter + '"/></td>';
-        cols += '<td><input type="text" class="form-control" name="mail' + counter + '"/></td>';
-        cols += '<td><input type="text" class="form-control" name="phone' + counter + '"/></td>';
+        cols += '<td><input type="text" class="form-control" id="mail' + counter + '"/></td>';
+        cols += '<td><input type="text" class="form-control" id="phone' + counter + '"/></td>';
 
-        cols += '<td><input type="button" class="ibtnDel btn btn-md btn-danger "  value="Delete"></td>';
+        cols += '<td><input type="button" class="ibtnDel btn btn-md btn-danger "  value="Delete" onclick="return delme('+ counter +')"></td>';
         newRow.append(cols);
         $("table.order-list").append(newRow);
         counter++;
     });
 
-
-
-    $("table.order-list").on("click", ".ibtnDel", function (event) {
-        $(this).closest("tr").remove();       
-        counter -= 1;
-    });
-
-
 });
 
-
-
-function calculateRow(row) {
-    var price = +row.find('input[name^="price"]').val();
-
-}
-
-function calculateGrandTotal() {
-    var grandTotal = 0;
-    $("table.order-list").find('input[name^="price"]').each(function () {
-        grandTotal += +$(this).val();
-    });
-    $("#grandtotal").text(grandTotal.toFixed(2));
-}
 </script>
+<script>
+    //delete table row
+    function delme(id) {
+        if(id==0)
+        {
+            alert("sorry u can't delete this");
+            return false;
+        }
+        $('#name'+id).val('-1');
+        $('#mail'+id).val('-1');
+        $('#phone'+id).val('-1');
+  
+        var result_style = document.getElementById('tr' +id).style;
+        result_style.display = 'none';
+    }
+    </script>
